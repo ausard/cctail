@@ -226,7 +226,7 @@ let getThatLogList = async function (profile: DwJson, filesuffix = ".log"): Prom
         date: moment.utc(match[3]),
         debug: debug
       });
-      logger.log(logger.debug, `Available Log: ${match[1]}`, debug);
+      logger.log(logger.debug, `Available Log: ${match[1]}, ${match[3]}`, debug);
     }
     match = regexp.exec(data);
   }
