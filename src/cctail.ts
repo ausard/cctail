@@ -218,8 +218,12 @@ let getThatLogList = async function (profile: DwJson, filesuffix = ".log"): Prom
   let match = regexp.exec(data);
 
   while (match != null) {
-    let filedate = moment.utc(match[3]);
-    if (match[1].substr(-4) === filesuffix && filedate.isSame(moment.utc(), 'day')) {
+    // let filedate = moment.utc(match[3]);
+    let dateRegex = /(\d{8})\.(log|csv)/;
+    let filedate = dateRegex.exec(match[1]);
+    let extractedDate = moment(filedate, "YYYYMMDD");
+    // if (match[1].substr(-4) === filesuffix && filedate.isSame(moment.utc(), 'day')) {
+    if (match[1].substr(-4) === filesuffix && extractedDate.isSame(moment.utc(), 'day')) {
       fileobjs.push({
         log: match[1],
         size_string: match[2],
