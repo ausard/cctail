@@ -218,10 +218,15 @@ let getThatLogList = async function (profile: DwJson, filesuffix = ".log"): Prom
   let match = regexp.exec(data);
 
   while (match != null) {
-    // let filedate = moment.utc(match[3]);
+    // let filedate = moment.utc(match[3]); 
+    // service-sfcore-get-prodreg-blade3-1-0-appserver-20231113.log
     let dateRegex = /(\d{8})\.(log|csv)/;
     let filedate = dateRegex.exec(match[1]);
+    
     let extractedDate = moment(filedate, "YYYYMMDD");
+
+   
+
     // if (match[1].substr(-4) === filesuffix && filedate.isSame(moment.utc(), 'day')) {
     if (match[1].substr(-4) === filesuffix && extractedDate.isSame(moment.utc(), 'day')) {
       fileobjs.push({
@@ -230,7 +235,7 @@ let getThatLogList = async function (profile: DwJson, filesuffix = ".log"): Prom
         date: moment.utc(match[3]),
         debug: debug
       });
-      logger.log(logger.debug, `Available Log: ${match[1]}, ${match[3]}`, debug);
+      logger.log(logger.debug, `Available Log: ${match[1]}, date: ${match[3]} , extractedDate: ${extractedDate}, moment: ${moment.utc()}, filedate: ${filedate}`, debug);
     }
     match = regexp.exec(data);
   }
